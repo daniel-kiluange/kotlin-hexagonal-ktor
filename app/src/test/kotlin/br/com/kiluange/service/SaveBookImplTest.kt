@@ -9,6 +9,7 @@ import org.junit.Test
 import org.koin.core.logger.Level
 import org.koin.test.KoinTest
 import org.koin.test.KoinTestRule
+import org.koin.test.inject
 import org.koin.test.mock.MockProviderRule
 import org.koin.test.mock.declareMock
 import org.mockito.Mockito
@@ -34,9 +35,18 @@ internal class SaveBookImplTest : KoinTest {
     @Test
     fun `save Book Test`() = runBlocking {
         val service = declareMock<SaveBook> {
-            given(runBlocking { saveBook("Daniel") })
-                .willReturn(Book(UUID.randomUUID(), "Daniel"))
+            given(runBlocking { saveBook("Book test 1") })
+                .willReturn(Book(UUID.randomUUID(), "Book test 1"))
         }
-        assertEquals("Daniel", service.saveBook("Daniel").name)
+        assertEquals("Book test 1", service.saveBook("Book test 1").name)
+    }
+
+    @Test
+    fun `save Book with categories`() = runBlocking {
+        val service: SaveBook by inject()
+
+        val book = service.saveBook("Book test 2", arrayOf("Teste 1","Teste 2","Teste 3"))
+
+        assertEquals(3, book.categories.size)
     }
 }
