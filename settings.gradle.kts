@@ -1,4 +1,4 @@
-rootProject.name = "ktor-graphql"
+rootProject.name = "kotlin-hexagonal-ktor"
 
 include("app")
 include("data")
