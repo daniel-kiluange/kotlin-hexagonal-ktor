@@ -5,13 +5,13 @@ import br.com.kiluange.usecase.SaveBook
 
 class SaveBookImpl : SaveBook {
     override suspend fun saveBook(name: String): Book {
-        val builder: Book.Builder = Book.Builder("Test")
-            .category("uncategorized")
+        val builder: Book.Builder = Book.Builder(name)
         return builder.build()
     }
 
     override suspend fun saveBook(name: String, categories: Array<String>): Book {
-        val builder: Book.Builder = Book.Builder(name)
+        val builder = this.saveBook(name).toBuilder()
+
         for (category in categories) {
             builder.category(category)
         }
